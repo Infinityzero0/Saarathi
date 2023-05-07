@@ -1,31 +1,57 @@
+import 'package:driver_app/splashScreen/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/choose.dart';
-import 'package:flutter_demo/driver_signup.dart';
-import 'package:flutter_demo/login_page.dart';
-import 'package:flutter_demo/splash.dart';
-// import 'package:flutter_demo/signup_page.dart';
-// import 'package:get/get_navigation/src/root/get_material_app.dart';
-// import 'package:flutter_demo/login_page.dart';
-// import 'package:flutter_demo/signup_page.dart';
 
-// import 'driver_signup.dart';
-
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MyApp(
+    child: MaterialApp(
+      title: "Ambulance Driver App",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+     home: MySplashScreen(),
+      debugShowCheckedModeBanner: false,
+    ),
+  )
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  
+  final Widget? child;
+  MyApp({this.child});
+
+  static void restartApp(BuildContext context)
+  {
+    context.findAncestorStateOfType<_MyAppState>()!.restartApp();
+  } 
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+   Key key = UniqueKey();
+
+   void restartApp(){
+    setState(() {
+      key = UniqueKey();
+    });
+   }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: Splash(),
-    );
+    
+    return KeyedSubtree(
+      key: key,
+      child: widget.child!,
+      );
   }
 }
+
+
