@@ -1,18 +1,25 @@
-import 'package:driver_app/authentication/signup_screen.dart';
-import 'package:driver_app/global/global.dart';
-import 'package:driver_app/splashScreen/splash_screen.dart';
-import 'package:driver_app/widgets/progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:users_app/authentication/signup_screen.dart';
+import 'package:users_app/global/global.dart';
+import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/widgets/progress_dialog.dart';
 
-class LoginScreen extends StatefulWidget {
+
+class LoginScreen extends StatefulWidget
+{
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+
+
+
+class _LoginScreenState extends State<LoginScreen>
+{
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
@@ -29,11 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     else
     {
-      loginDriverNow();
+      loginUserNow();
     }
   }
 
-  loginDriverNow() async
+  loginUserNow() async
   {
     showDialog(
         context: context,
@@ -56,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if(firebaseUser != null)
     {
-      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("drivers");
+      DatabaseReference driversRef = FirebaseDatabase.instance.ref().child("users");
       driversRef.child(firebaseUser.uid).once().then((driverKey)
       {
         final snap = driverKey.snapshot;
@@ -80,132 +87,125 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(msg: "Error Occurred during Login.");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 253, 253, 253),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
-              ),
+
+              const SizedBox(height: 30,),
 
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo1.png"),
+                child: CircleAvatar(
+                  radius: 100,
+                  backgroundColor: Color.fromARGB(255, 235, 232, 232),
+                  child: Image.asset("images/logo.png")),
               ),
 
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10,),
 
               const Text(
-                "Login as a Driver",
+                "Login as a User",
                 style: TextStyle(
                   fontSize: 26,
-                  color: Color.fromARGB(255, 9, 9, 9),
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
-
-              //Email
+              //Email id  
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(
-                  color: Color.fromARGB(255, 9, 9, 9),
+                    color: Colors.black
                 ),
                 decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "Email",
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 9, 9, 9)),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 9, 9, 9)),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 9, 9, 9),
+                    color: Colors.black,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 9, 9, 9),
+                    color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
 
+              const SizedBox(height: 20,),
               //Password
               TextField(
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-                style: const TextStyle(color: Color.fromARGB(255, 9, 9, 9)),
+                style: const TextStyle(
+                    color: Colors.black
+                ),
                 decoration: const InputDecoration(
                   labelText: "Password",
                   hintText: "Password",
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 9, 9, 9)),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 9, 9, 9)),
+                    borderSide: BorderSide(color: Colors.black),
                   ),
                   hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 9, 9, 9),
+                    color: Colors.black,
                     fontSize: 10,
                   ),
                   labelStyle: TextStyle(
-                    color: Color.fromARGB(255, 9, 9, 9),
+                    color: Colors.black,
                     fontSize: 14,
                   ),
                 ),
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20,),
 
               ElevatedButton(
-                onPressed: () {
-                   validateForm();
+                onPressed: ()
+                {
+                  validateForm();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 41, 41, 41),
+                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text(
                   "Login",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 250, 249, 249),
                     fontSize: 18,
                   ),
                 ),
               ),
 
-              const SizedBox(
-                height: 10,
-              ),
-
               TextButton(
                 child: const Text(
                   "Do not have an Account? SignUp Here",
-                  style: TextStyle(color: Color.fromARGB(255, 47, 47, 47)),
+                  style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => SignUpScreen()));
+                onPressed: ()
+                {
+                  Navigator.push(context, MaterialPageRoute(builder: (c)=> SignUpScreen()));
                 },
               ),
+
             ],
           ),
         ),

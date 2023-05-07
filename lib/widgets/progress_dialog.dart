@@ -13,7 +13,7 @@ class ProgressDialog extends StatelessWidget
     return Dialog(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       child: Container(
-        margin: const EdgeInsets.all(16.0),
+        margin: const EdgeInsets.all(1.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(6),
@@ -29,7 +29,7 @@ class ProgressDialog extends StatelessWidget
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
               ),
 
-              const SizedBox(width: 26.0,),
+              const SizedBox(width: 20.0,),
 
               Text(
                 message!,
